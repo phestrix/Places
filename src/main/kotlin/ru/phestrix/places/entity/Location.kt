@@ -11,12 +11,12 @@ data class Location(
     val osm_type: String,
     val osm_key: String,
     val name: String,
-    val country: String,
-    val city: String,
-    val state: String,
-    val street: String,
-    val housenumber: String,
-    val postcode: String
+    val country: String?,
+    val city: String?,
+    val state: String?,
+    val street: String?,
+    val housenumber: String?,
+    val postcode: String?
 )
 
 data class GeocodingPoint(
