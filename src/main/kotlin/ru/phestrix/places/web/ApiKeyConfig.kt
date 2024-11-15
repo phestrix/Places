@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 
 @Component
 @ConfigurationProperties(prefix = "api.keys")
-data class ApiKeysConfig (
+data class ApiKeyConfig (
     var graphhopper: String = "",
     var openweathermap: String = "",
     var opentripmap: String = ""

@@ -20,6 +20,7 @@ class WebClientConfig {
     fun graphhopperWebClient(): WebClient {
         return WebClient.builder()
             .baseUrl("https://graphhopper.com/api/1")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
     }
 
@@ -27,6 +28,7 @@ class WebClientConfig {
     fun openTripMapWebClient(): WebClient {
         return WebClient.builder()
             .baseUrl("https://api.opentripmap.com/0.1/en/places")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
     }
 }
