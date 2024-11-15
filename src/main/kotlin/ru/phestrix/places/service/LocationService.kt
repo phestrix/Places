@@ -1,29 +1,14 @@
 package ru.phestrix.places.service
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.bodyToMono
+import reactor.core.publisher.Mono
 import ru.phestrix.places.entity.Location
+import ru.phestrix.places.web.LocationApiClient
 
 @Service
-class LocationService(private val webClient: WebClient) {
+class LocationService(private val locationApiClient: LocationApiClient) {
 
-    suspend fun getLocations(query: String, apiKey: String): List<Location> {
-        val uri = "https://graphhopper.com/api/1/geocode?q=$query&key=$apiKey"
-        return withContext(Dispatchers.IO){
-            val response = webClient.get()
-                .uri(uri)
-                .retrieve()
-                .bodyToMono(String::class.java)
-                .block()
-            parseLocations(response.toString())
-        }
-    }
-
-    private fun parseLocations(response: String): List<Location> {
-        //TODO: parse json to list of locs
-        return listOf()
+    fun searchLocations(query: String): Mono<List<Location>> {
+        return locationApiClient.getLocation(query).map { it.hits  }
     }
 }

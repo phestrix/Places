@@ -1,12 +1,14 @@
 package ru.phestrix.places.service
 
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.client.WebClient
-import ru.phestrix.places.entity.Weather
+import reactor.core.publisher.Mono
+import ru.phestrix.places.entity.WeatherResponse
+import ru.phestrix.places.util.Coordinates
+import ru.phestrix.places.web.WeatherApiClient
 
 @Service
-class WeatherService(private val webClient: WebClient) {
-    suspend fun getWeather(lon: Double, lat: Double): Weather {
-
+class WeatherService(private val weatherApiClient: WeatherApiClient) {
+    fun getWeather(coordinates: Coordinates): Mono<WeatherResponse> {
+        return weatherApiClient.getWeatherByCoordinates(coordinates)
     }
 }
