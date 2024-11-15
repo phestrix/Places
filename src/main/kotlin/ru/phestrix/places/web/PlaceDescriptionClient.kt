@@ -7,13 +7,13 @@ import reactor.core.publisher.Mono
 import ru.phestrix.places.entity.PlaceDetailsResponse
 
 @Component
-class PlaceDescriptionClient(@Qualifier("openTripMapWebClient") private val webClient: WebClient, private val apiKey: String) {
+class PlaceDescriptionClient(@Qualifier("openTripMapWebClient") private val webClient: WebClient, private val apiKeyConfig: ApiKeyConfig) {
     fun getPlaceDetails(xid: String): Mono<PlaceDetailsResponse> {
         return webClient.get()
             .uri { uriBuilder ->
                 uriBuilder
                     .path("/xid/{xid}")
-                    .queryParam("apikey", apiKey)
+                    .queryParam("apikey", apiKeyConfig.openweathermap)
                     .build(xid)
             }
             .retrieve()

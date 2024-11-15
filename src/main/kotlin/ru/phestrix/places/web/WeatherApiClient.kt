@@ -8,7 +8,7 @@ import ru.phestrix.places.entity.WeatherResponse
 import ru.phestrix.places.util.Coordinates
 
 @Component
-class WeatherApiClient(@Qualifier("weatherWebClient") private val webClient: WebClient, private val apiKey: String) {
+class WeatherApiClient(@Qualifier("weatherWebClient") private val webClient: WebClient, private val apiKeyConfig: ApiKeyConfig) {
     fun getWeatherByCoordinates(coordinates: Coordinates): Mono<WeatherResponse>{
         return webClient.get()
             .uri { uriBuilder ->
@@ -16,7 +16,7 @@ class WeatherApiClient(@Qualifier("weatherWebClient") private val webClient: Web
                     .path("/weather")
                     .queryParam("lat", coordinates.latitude)
                     .queryParam("lon", coordinates.longitude)
-                    .queryParam("appid", apiKey)
+                    .queryParam("appid", apiKeyConfig.openweathermap)
                     .build()
             }
             .retrieve()

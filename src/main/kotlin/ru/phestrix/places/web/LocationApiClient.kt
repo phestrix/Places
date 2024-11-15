@@ -7,13 +7,14 @@ import reactor.core.publisher.Mono
 import ru.phestrix.places.entity.GeocodingResponse
 
 @Component
-class LocationApiClient(@Qualifier("graphhopperWebClient") private val webClient: WebClient, private val apiKey: String) {
+class LocationApiClient(@Qualifier("graphhopperWebClient") private val webClient: WebClient, private val apiKeyConfig: ApiKeyConfig) {
     fun getLocation(query: String): Mono<GeocodingResponse>{
         return webClient.get()
             .uri { uriBuilder ->
                 uriBuilder
                     .path("/geocode")
                     .queryParam("q", query)
+                    .queryParam("key", apiKeyConfig.graphhopper)
                     .build()
             }
             .retrieve()

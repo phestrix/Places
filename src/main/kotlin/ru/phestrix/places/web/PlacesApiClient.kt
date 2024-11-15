@@ -8,7 +8,7 @@ import ru.phestrix.places.entity.PlacesResponse
 import ru.phestrix.places.util.Coordinates
 
 @Component
-class PlacesApiClient(@Qualifier("openTripMapWebClient") private val webClient: WebClient, private val apiKey: String) {
+class PlacesApiClient(@Qualifier("openTripMapWebClient") private val webClient: WebClient, private val apiKeyConfig: ApiKeyConfig) {
     fun getPlacesByCoordinates(coordinates: Coordinates, radius: Int = 1000): Mono<PlacesResponse> {
         return webClient.get()
             .uri { uriBuilder ->
@@ -17,7 +17,7 @@ class PlacesApiClient(@Qualifier("openTripMapWebClient") private val webClient: 
                     .queryParam("lat", coordinates.latitude)
                     .queryParam("lon", coordinates.longitude)
                     .queryParam("radius", radius)
-                    .queryParam("apikey", apiKey)
+                    .queryParam("apikey", apiKeyConfig.opentripmap)
                     .build()
             }
             .retrieve()
