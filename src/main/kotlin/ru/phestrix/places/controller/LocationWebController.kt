@@ -24,7 +24,11 @@ class LocationWebController(
 ) {
 
     @GetMapping("/location/info")
-    fun getLocationInfo(@RequestParam query: String, model: Model): String{
+    fun getLocationInfo(@RequestParam(required = false) query: String?, model: Model): String{
+        if (query.isNullOrBlank()) {
+            // Если параметр query отсутствует, просто возвращаем форму
+            return "location-info"
+        }
         return locationService.searchLocations(query)
             .flatMap{locations ->
                 if(locations.isEmpty()){

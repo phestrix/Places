@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import ru.phestrix.places.entity.PlaceDetailsResponse
+import ru.phestrix.places.web.config.ApiKeyConfig
 
 @Component
 class PlaceDescriptionApiClient(@Qualifier("openTripMapWebClient") private val webClient: WebClient, private val apiKeyConfig: ApiKeyConfig) {

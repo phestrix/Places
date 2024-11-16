@@ -6,6 +6,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import ru.phestrix.places.entity.WeatherResponse
 import ru.phestrix.places.util.Coordinates
+import ru.phestrix.places.web.config.ApiKeyConfig
 
 @Component
 class WeatherApiClient(@Qualifier("weatherWebClient") private val webClient: WebClient, private val apiKeyConfig: ApiKeyConfig) {

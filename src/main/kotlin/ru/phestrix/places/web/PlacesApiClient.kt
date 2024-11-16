@@ -6,6 +6,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import ru.phestrix.places.entity.PlacesResponse
 import ru.phestrix.places.util.Coordinates
+import ru.phestrix.places.web.config.ApiKeyConfig
 
 @Component
 class PlacesApiClient(@Qualifier("openTripMapWebClient") private val webClient: WebClient, private val apiKeyConfig: ApiKeyConfig) {

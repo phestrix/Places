@@ -8,7 +8,7 @@ import ru.phestrix.places.web.PlacesApiClient
 
 @Service
 class PlacesService(private val placesApiClient: PlacesApiClient) {
-    fun getInterestingPlaces(coordinates: Coordinates, radius: Int): Mono<List<Place>> {
+    fun getInterestingPlaces(coordinates: Coordinates, radius: Int = 1000): Mono<List<Place>> {
         return placesApiClient.getPlacesByCoordinates(coordinates, radius).map { it.features }
     }
 }

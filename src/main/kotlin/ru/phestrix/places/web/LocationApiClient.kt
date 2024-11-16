@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import ru.phestrix.places.entity.GeocodingResponse
+import ru.phestrix.places.web.config.ApiKeyConfig
 
 @Component
 class LocationApiClient(@Qualifier("graphhopperWebClient") private val webClient: WebClient, private val apiKeyConfig: ApiKeyConfig) {

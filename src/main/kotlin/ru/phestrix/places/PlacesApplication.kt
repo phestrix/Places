@@ -3,7 +3,7 @@ package ru.phestrix.places
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
-import ru.phestrix.places.web.ApiKeyConfig
+import ru.phestrix.places.web.config.ApiKeyConfig
 
 @SpringBootApplication
 @EnableConfigurationProperties(ApiKeyConfig::class)
