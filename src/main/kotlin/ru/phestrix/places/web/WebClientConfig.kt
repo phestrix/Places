@@ -11,8 +11,8 @@ class WebClientConfig {
 
     @Bean
     fun weatherWebClient(): WebClient {
-        return WebClient.builder().baseUrl("https://api.openweathermap.org/data/2.5").defaultHeader(HttpHeaders.CONTENT_TYPE,
-            MediaType.APPLICATION_JSON_VALUE)
+        return WebClient.builder().baseUrl("https://api.openweathermap.org/data/2.5")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
     }
 
