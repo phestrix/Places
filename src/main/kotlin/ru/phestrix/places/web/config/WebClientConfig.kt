@@ -1,4 +1,4 @@
-package ru.phestrix.places.web
+package ru.phestrix.places.web.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

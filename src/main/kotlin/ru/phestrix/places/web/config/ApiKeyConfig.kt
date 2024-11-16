@@ -1,4 +1,4 @@
-package ru.phestrix.places.web
+package ru.phestrix.places.web.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
