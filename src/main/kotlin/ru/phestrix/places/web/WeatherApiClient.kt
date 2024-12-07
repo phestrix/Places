@@ -17,6 +17,7 @@ class WeatherApiClient(@Qualifier("weatherWebClient") private val webClient: Web
                     .path("/weather")
                     .queryParam("lat", coordinates.latitude)
                     .queryParam("lon", coordinates.longitude)
+                    .queryParam("units", "metric")
                     .queryParam("appid", apiKeyConfig.openweathermap)
                     .build()
             }

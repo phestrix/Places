@@ -1,21 +1,6 @@
 package ru.phestrix.places.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Mono
-import ru.phestrix.places.entity.Location
-import ru.phestrix.places.entity.Place
-import ru.phestrix.places.entity.PlaceDetailsResponse
-import ru.phestrix.places.entity.WeatherResponse
-import ru.phestrix.places.service.LocationService
-import ru.phestrix.places.service.PlaceDetailsService
-import ru.phestrix.places.service.PlacesService
-import ru.phestrix.places.service.WeatherService
-import ru.phestrix.places.util.Coordinates
-
-@RestController
+/*@RestController
 @RequestMapping("/api")
 class LocationController(
     private val locationService: LocationService,
@@ -29,7 +14,11 @@ class LocationController(
     }
 
     @GetMapping("/places")
-    fun getPlaces(@RequestParam lat: Double, @RequestParam lon: Double,@RequestParam(required = false, defaultValue = "1000") radius: Int): Mono<List<Place>> {
+    fun getPlaces(
+        @RequestParam lat: Double,
+        @RequestParam lon: Double,
+        @RequestParam(required = false, defaultValue = "1000") radius: Int
+    ): Mono<List<Place>> {
         val coordinates = Coordinates(lat, lon)
         return placesService.getInterestingPlaces(coordinates, radius)
     }
@@ -44,4 +33,47 @@ class LocationController(
         val coordinates = Coordinates(lat, lon)
         return weatherService.getWeather(coordinates)
     }
-}
+
+    @GetMapping("/location/info")
+    fun getLocationInfo(@RequestParam query: String, model: Model): String {
+        locationService.searchLocations(query)
+            .flatMap { locations ->
+                if (locations.isEmpty()) {
+                    return@flatMap Mono.error<Map<String, Any>>(RuntimeException("No locations found for query: $query"))
+                }
+
+                val selectedLocation = locations.first()
+                val coordinates = Coordinates(selectedLocation.point.lat, selectedLocation.point.lng)
+
+                val weatherMono = weatherService.getWeather(coordinates)
+                val placesMono = placesService.getInterestingPlaces(coordinates, 1000)
+
+                Mono.zip(weatherMono, placesMono)
+                    .flatMap { tuple ->
+                        val weather = tuple.t1
+                        val places = tuple.t2
+
+                        val detailMonos =
+                            placeDetailsService.getLimitedPlacesDetails(places)//places.map{ place -> placeDetailsService.getPlaceDetails(place.properties.xid).map{details -> place to details} }
+                        detailMonos.flatMap { detailsList ->
+                            val placeDetails = detailsList.map { it }
+                            Mono.just(placeDetails)
+                        }.map { placeDetails: List<Pair<Place, PlaceDetailsResponse>> ->
+                            mapOf(
+                                "location" to selectedLocation,
+                                "weather" to weather,
+                                "placeDetails" to placeDetails
+                            )
+                        }
+                    }
+
+            }.doOnSuccess { result ->
+                model.addAttribute("locationInfo", result)
+            }
+            .doOnError { error ->
+                model.addAttribute("error", error.message ?: "Unknown error occuried")
+            }.block()
+
+        return "location-info"
+    }
+}*/

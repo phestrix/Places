@@ -1,5 +1,6 @@
 package ru.phestrix.places.entity
 
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class WeatherResponse(
@@ -51,8 +52,8 @@ data class Rain(
     @JsonProperty("1h") val lastHour: Double?
 )
 
-data class Clouds(
-    val all: Int
+data class Clouds @JsonCreator constructor(
+    @JsonProperty("all") val all: Int
 )
 data class Sys(
     val type: Int,
