@@ -16,7 +16,8 @@ data class Location(
     val state: String?,
     val street: String?,
     val housenumber: String?,
-    val postcode: String?
+    val postcode: String?,
+    val osm_value: String?
 )
 
 data class GeocodingPoint(

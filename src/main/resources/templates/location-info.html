@@ -28,6 +28,9 @@
                     <span>
                         <strong th:text="${location.name}"></strong>
                         (<span th:text="${location.point.lat}"></span>, <span th:text="${location.point.lng}"></span>)
+                        <span th:if="${location.osm_key}" th:text="${location.osm_key + ', '}"></span>
+                        <span th:if="${location.osm_value}" th:text="${location.osm_value + ', '}"></span>
+                        <span th:if="${location.city}" th:text="${location.city}"></span>
                     </span>
                     <input type="hidden" name="lat" th:value="${location.point.lat}"/>
                     <input type="hidden" name="lng" th:value="${location.point.lng}"/>
@@ -39,11 +42,17 @@
 
     <!-- Результаты для выбранной локации -->
     <div th:if="${placesDto}">
+        <!-- Название локации -->
+
+
         <!-- Погода -->
         <h2>Weather</h2>
         <ul>
             <li><strong>Temperature:</strong> <span th:text="${placesDto.weatherResponse.main.temp}"></span> °C</li>
             <li><strong>Description:</strong> <span th:text="${placesDto.weatherResponse.weather[0].description}"></span></li>
+            <li><strong>Wind:</strong> <span th:text="${placesDto.weatherResponse.wind.speed}"></span> m/s</li>
+            <li><strong>Feels Like:</strong> <span th:text="${placesDto.weatherResponse.main.feels_like}"></span> °C</li>
+            <li><strong>Pressure:</strong> <span th:text="${placesDto.weatherResponse.main.pressure*0.00750062}"></span> mm of mercury</li>
         </ul>
 
         <!-- Список интересных мест -->
@@ -57,6 +66,10 @@
                     <p><strong>Types:</strong>
                         <span th:text="${placeDetail.first.properties.kind ?: 'Not specified'}"></span>
                     </p>
+
+                    <div th:if="${placeDetail.second?.image != null}">
+                        <img th:src="${placeDetail.second.getImage()}" class="img-fluid mb-3" alt="Place image">
+                    </div>
                     <div th:if="${placeDetail.second}">
                         <h5>Description</h5>
                         <p th:text="${placeDetail.second.wikipedia_extracts?.text ?: 'No description available'}"></p>

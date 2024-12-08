@@ -39,7 +39,7 @@ class PlaceDescriptionApiClient(
 
     fun getLimitedPlacesDetails(places: List<Place>): Mono<List<Pair<Place, PlaceDetailsResponse>>> {
         println("Received places for details fetching: $places")
-        val limitedPlaces = places.take(10)
+        val limitedPlaces = places.take(5)
         println("Limited places to fetch details for: $limitedPlaces")
 
         val detailsMonos = limitedPlaces.map { feature ->
