@@ -34,6 +34,9 @@
                     </span>
                     <input type="hidden" name="lat" th:value="${location.point.lat}"/>
                     <input type="hidden" name="lng" th:value="${location.point.lng}"/>
+                    <input type="hidden" name="osmValue" th:value="${location.osm_value}"/>
+                    <input type="hidden" name="osmKey" th:value="${location.osm_key}"/>
+                    <input type="hidden" name="city" th:value="${location.city}"/>
                     <button type="submit" class="btn btn-sm btn-primary">Select</button>
                 </form>
             </li>
@@ -42,8 +45,18 @@
 
     <!-- Результаты для выбранной локации -->
     <div th:if="${placesDto}">
-        <!-- Название локации -->
+        <div class="mb-3">
+            <a href="/web/location/list" class="btn btn-secondary">Back to Locations</a>
+        </div>
 
+        <div th:if="${selectedLocation}">
+            <h2>Selected Location</h2>
+            <ul>
+                <li><strong>Value:</strong> <span th:text="${selectedLocation.osm_value}"></span></li>
+                <li><strong>Key:</strong> <span th:text="${selectedLocation.osm_key}"></span></li>
+                <li><strong>City:</strong><span th:text="${selectedLocation.city}"></span></li>
+            </ul>
+        </div>
 
         <!-- Погода -->
         <h2>Weather</h2>

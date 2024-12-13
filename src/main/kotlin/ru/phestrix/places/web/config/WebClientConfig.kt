@@ -27,7 +27,7 @@ class WebClientConfig {
     @Bean
     fun openTripMapWebClient(): WebClient {
         return WebClient.builder()
-            .baseUrl("https://api.opentripmap.com/0.1/en/places")
+            .baseUrl("https://api.opentripmap.com/0.1/ru/places")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
     }
